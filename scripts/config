@@ -1,0 +1,5 @@
+API_HOST="cp.p-dns.com"
+DOMAIN_NAME="DomainName"
+API_USERNAME="UserName"
+API_PASSWORD="Password"
+EMAIL="email"
