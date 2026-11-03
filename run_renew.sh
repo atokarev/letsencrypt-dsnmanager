@@ -10,7 +10,7 @@ certbot certonly \
 	--email $EMAIL \
 	--manual-auth-hook ./scripts/cb_start.sh \
 	--manual-cleanup-hook ./scripts/cb_cleanup.sh \
-	-d $DOMAIN_NAME -d *.$DOMAIN_NAME \
+	-d $REQ_CERT_DOMAIN_NAME -d *.$REQ_CERT_DOMAIN_NAME \
 	--server https://acme-v02.api.letsencrypt.org/directory \
 	--non-interactive \
 	--config-dir ./data/config \

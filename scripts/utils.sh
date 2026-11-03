@@ -7,6 +7,33 @@ AUTH_ID=$API_USERNAME:$API_PASSWORD
 
 ############################################################
 
+get_txt_acme_name() {
+	local domain_name="$1"
+	local cert_domain="$2"
+	local subdomain=""
+
+	if [[ -z "$cert_domain" ]]; then
+    		echo "Error: CERTBOT_IDENTIFIER is empty" >&2
+    		return 1
+	fi
+	cert_domain="${cert_domain#\*.}"
+	if [[ "$cert_domain" == "$domain_name" ]]; then
+    		subdomain=""
+	elif [[ "$cert_domain" == *."$domain_name" ]]; then
+    		subdomain="${cert_domain%.$domain_name}"
+	else
+    		echo "Error: incorrect domain: $cert_domain" >&2
+    		return 1
+	fi
+	local txt_name="_acme-challenge"
+	if [[ -n "$subdomain" ]]; then
+    		txt_name="${txt_name}.${subdomain}"
+	fi
+	echo "$txt_name"
+}
+
+############################################################
+
 get_domain_records() {
 	local domain=$1
 	local resp=$(curl -s -G -X GET "https://$API_HOST/dnsmgr" \
